@@ -15,6 +15,10 @@ public class FoodItem {
     private LocalDateTime expDate;
 
     public FoodItem(String name, String notes, double price) {
+        if (name.equals("")) {
+            throw new IllegalArgumentException("Name of food cannot be empty.");
+        }
+
         this.name = name;
         this.notes = notes;
         this.price = price;
