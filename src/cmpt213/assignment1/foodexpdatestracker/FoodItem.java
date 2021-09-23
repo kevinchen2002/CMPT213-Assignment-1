@@ -2,6 +2,7 @@ package cmpt213.assignment1.foodexpdatestracker;
 
 
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 public class FoodItem {
@@ -38,6 +39,20 @@ public class FoodItem {
         foodString += "\nExpiry date: " + expDate.format(formatter);
 
         //ADD HOW MANY DAYS UNTIL IT EXPIRES
+        LocalDateTime currentTime = LocalDateTime.now();
+        if (currentTime.isBefore(expDate)) {
+            Period period = Period.between(currentTime.toLocalDate(), expDate.toLocalDate());
+            int daysUntilExpiry = period.getDays();
+            if (daysUntilExpiry == 0) {
+                foodString += "\nThis food item will expire today.";
+            }
+            else {
+                foodString += "\nThis food will expire in " + daysUntilExpiry + " day(s).";
+            }
+        }
+        else {
+            foodString += "\nThis food is already expired!";
+        }
 
         return foodString;
     }
