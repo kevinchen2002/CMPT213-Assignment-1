@@ -12,7 +12,6 @@ class TextMenuTest {
     @org.junit.jupiter.api.Test
     void displayTitle() {
         TextMenu test1 = new TextMenu();
-        test1.printTitle();
     }
 
 }
