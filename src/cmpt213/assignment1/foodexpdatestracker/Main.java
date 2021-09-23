@@ -2,26 +2,133 @@ package cmpt213.assignment1.foodexpdatestracker;
 
 import org.w3c.dom.Text;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import static java.time.LocalTime.now;
 
 public class Main {
 
     //ArrayList of food items
-    ArrayList<FoodItem> foodList = new ArrayList<>();
+    static ArrayList<FoodItem> foodList = new ArrayList<>();
+
+    //helper functions to ensure numerical input
+    private static int getInt() {
+        int choice = 0;
+        Scanner in = new Scanner(System.in);
+        while (true) {
+            try {
+                choice = Integer.parseInt(in.nextLine());
+                return choice;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Not an integer");
+            }
+        }
+    }
+    private static double getDouble() {
+        double choice = 0;
+        Scanner in = new Scanner(System.in);
+        while (true) {
+            try {
+                choice = Double.parseDouble(in.nextLine());
+                return choice;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Not a double!");
+            }
+        }
+    }
 
     //methods for menu options
+
+    //case 1: list all food items
+    public static void ListFood() {
+        for (FoodItem item : foodList) {
+            System.out.println(item);
+        }
+        //LATER: SORT BY EXPIRY
+    }
+
+    //case 2: add a food item
+    public static void AddFood() {
+        Scanner in = new Scanner(System.in);
+
+        String foodName = "";
+        while (foodName.equals("")) {
+            System.out.println("Enter the name of the new food item: ");
+            foodName = in.nextLine();
+        }
+
+        String foodNotes = "";
+        System.out.println("Enter any notes for the new food item: ");
+        foodNotes = in.nextLine();
+
+        //get price
+        double price = -1.0;
+        while (price < 0) {
+            System.out.println("Enter the price of this item: ");
+            price = getDouble();
+        }
+
+        //get expiry year
+        int year = -1;
+        while (year < 2000) {
+            System.out.println("Enter the year of the expiry date: ");
+            year = getInt();
+        }
+
+        //get expiry month
+        int month = -1;
+        while (month < 1 || month > 12) {
+            System.out.println("Enter the month of the expiry date: ");
+            month = getInt();
+        }
+
+        //get expiry day
+        int day = -1;
+        //max day varies by month
+        int maxDay = 31;
+        if (month == 4 || month == 6 || month == 9 || month == 11) {
+            maxDay = 30;
+        }
+        else if (month == 2) {
+            maxDay = 28;
+        }
+        while (day < 1 || day > maxDay) {
+            System.out.println("Enter the day of the expiry date: ");
+            day = getInt();
+        }
+
+        LocalDateTime expiry = LocalDateTime.of(year, month, day, 11, 59);
+        FoodItem newFoodItem = new FoodItem(foodName, foodNotes, price, expiry);
+
+        //insert in the correct spot to ensure ascending order of dates
+        int maxSize = foodList.size();
+        for (int i = 0; i < maxSize; i++) {
+            if (expiry.isBefore(foodList.get(i).getExpDate())) {
+                foodList.add(i, newFoodItem);
+            }
+            else if (i == maxSize-1) {
+                foodList.add(newFoodItem);
+            }
+        }
+
+        System.out.println("Item " + foodName + " has been added!");
+    }
 
     //mainMenu; operations done from here
     public static void mainMenu() {
         TextMenu menu = new TextMenu();
-        while (true) {
-            int choice = menu.displayMenu();
+        menu.printTitle();
+        int choice = 0;
+        while (choice != 7) {
+            choice = menu.displayMenu();
             switch (choice) {
                 case 1:
-                    System.out.println("case 1");
+                    ListFood();
                     break;
                 case 2:
-                    System.out.println("case 2");
+                    AddFood();
                     break;
                 case 3:
                     System.out.println("case 3");
@@ -51,6 +158,14 @@ public class Main {
 
     //main
     public static void main(String[] args) {
+
+        //temp stuff
+        FoodItem test = new FoodItem("Apple", "Tim Apple", 1.00, LocalDateTime.now());
+        foodList.add(test);
+
+        FoodItem test2 = new FoodItem("Pear", "Dis a pear", 19.94, LocalDateTime.now());
+        foodList.add(test2);
+
         mainMenu();
     }
 

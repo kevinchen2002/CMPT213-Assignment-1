@@ -34,10 +34,9 @@ public class TextMenu {
 
     //show menu method with a switch case and input handling
     public int displayMenu() {
-        printTitle();
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        System.out.println("Today is: " + currentTime.format(formatter));
+        System.out.println("Today is: " + currentTime.format(formatter) + "\n");
 
         for (int i = 1; i <= NUM_MENU_OPTIONS; i++) {
             System.out.println(i + ": " + menuOptions[i-1]);

@@ -28,11 +28,15 @@ public class FoodItem {
         this.expDate = expDate;
     }
 
+    public LocalDateTime getExpDate() {
+        return expDate;
+    }
+
     //override toString()
     @Override
     public String toString() {
         String foodString = "";
-        foodString += "Food: " + name;
+        foodString += "\nFood: " + name;
         foodString += "\nNotes: " + notes;
         foodString += "\nPrice: " + price;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
