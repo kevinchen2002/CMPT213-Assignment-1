@@ -14,6 +14,8 @@ public class FoodItem {
     private String notes;
     private double price;
     private LocalDateTime expDate;
+    private int daysUntilExp;
+    private boolean isExpired;
 
     public FoodItem(String name, String notes, double price, LocalDateTime expDate) {
 
@@ -26,6 +28,19 @@ public class FoodItem {
         this.notes = notes;
         this.price = price;
         this.expDate = expDate;
+
+        //update time until expiry upon construction
+        //FIX LATER, DOES NOT ACCOUNT FOR TIME BETWEEN MONTHS AND YEARS
+        LocalDateTime currentTime = LocalDateTime.now();
+        if (currentTime.isBefore(expDate)) {
+            isExpired = false;
+            Period period = Period.between(currentTime.toLocalDate(), expDate.toLocalDate());
+            this.daysUntilExp = period.getDays();
+        }
+        else {
+            this.isExpired = true;
+            this.daysUntilExp = -1;
+        }
     }
 
     public LocalDateTime getExpDate() {
@@ -42,11 +57,14 @@ public class FoodItem {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         foodString += "\nExpiry date: " + expDate.format(formatter);
 
-        //ADD HOW MANY DAYS UNTIL IT EXPIRES
+        //update time until expiry every time the food is displayed
+        //FIX LATER, DOES NOT ACCOUNT FOR TIME BETWEEN MONTHS AND YEARS
         LocalDateTime currentTime = LocalDateTime.now();
         if (currentTime.isBefore(expDate)) {
+            isExpired = false;
             Period period = Period.between(currentTime.toLocalDate(), expDate.toLocalDate());
             int daysUntilExpiry = period.getDays();
+            this.daysUntilExp = daysUntilExpiry;
             if (daysUntilExpiry == 0) {
                 foodString += "\nThis food item will expire today.";
             }
@@ -55,6 +73,8 @@ public class FoodItem {
             }
         }
         else {
+            this.isExpired = true;
+            this.daysUntilExp = -1;
             foodString += "\nThis food is already expired!";
         }
 
