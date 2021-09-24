@@ -174,6 +174,25 @@ public class Main {
         }
     }
 
+    public static void expiringSevenDays() {
+        if (foodList.isEmpty()) {
+            System.out.println("There are no food items!");
+        }
+        int itemNum = 1;
+        boolean noneWithinSevenDays = true;
+        for (FoodItem item : foodList) {
+            if (item.getDaysUntilExp() <= 7 && !item.isExpired()) {
+                System.out.println("\nFood Item #" + itemNum);
+                System.out.println(item);
+                noneWithinSevenDays = false;
+                itemNum++;
+            }
+        }
+        if (noneWithinSevenDays && foodList.size() != 0) {
+            System.out.println("There are no foods expiring within 7 days!");
+        }
+    }
+
     //mainMenu; operations done from here
     public static void mainMenu() {
         TextMenu menu = new TextMenu();
@@ -198,7 +217,7 @@ public class Main {
                     listNotExpired();
                     break;
                 case 6:
-                    System.out.println("case 6");
+                    expiringSevenDays();
                     break;
                 case 7:
                     break;

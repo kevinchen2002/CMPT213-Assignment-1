@@ -20,7 +20,7 @@ public class TextMenu {
             "                                     |_|           |___/                                                                 \n";
 
     private final String[] menuOptions = new String[] {"List food items", "Add new food item", "Remove food item",
-            "List expired food items", "List non-expired food items", "List food items expiring witin 7 days", "Exit"};
+            "List expired food items", "List non-expired food items", "List food items expiring within 7 days", "Exit"};
 
     private final int NUM_MENU_OPTIONS = 7;
 
