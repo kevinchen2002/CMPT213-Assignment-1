@@ -46,6 +46,7 @@ public class FoodItem {
     public LocalDateTime getExpDate() {
         return expDate;
     }
+    public String getName() {return name;}
 
     //override toString()
     @Override

@@ -15,7 +15,7 @@ public class Main {
 
     //helper functions to ensure numerical input
     private static int getInt() {
-        int choice = 0;
+        int choice;
         Scanner in = new Scanner(System.in);
         while (true) {
             try {
@@ -27,7 +27,7 @@ public class Main {
         }
     }
     private static double getDouble() {
-        double choice = 0;
+        double choice;
         Scanner in = new Scanner(System.in);
         while (true) {
             try {
@@ -42,7 +42,7 @@ public class Main {
     //methods for menu options
 
     //case 1: list all food items
-    public static void ListFood() {
+    public static void listFood() {
         if (foodList.isEmpty()) {
             System.out.println("There are no food items!");
         }
@@ -55,7 +55,7 @@ public class Main {
     }
 
     //case 2: add a food item
-    public static void AddFood() {
+    public static void addFood() {
         Scanner in = new Scanner(System.in);
 
         String foodName = "";
@@ -112,13 +112,28 @@ public class Main {
         for (int i = 0; i < maxSize; i++) {
             if (expiry.isBefore(foodList.get(i).getExpDate())) {
                 foodList.add(i, newFoodItem);
+                break;
             }
             else if (i == maxSize-1) {
                 foodList.add(newFoodItem);
+                break;
             }
         }
 
         System.out.println("Item " + foodName + " has been added!");
+    }
+
+    public static void removeFood() {
+        listFood();
+        //get the item that the user will delete
+        int toDelete = -1;
+        while (toDelete < 1 || toDelete > foodList.size()) {
+            System.out.println("Which item would you like to delete? ");
+            toDelete = getInt();
+        }
+        FoodItem removed = foodList.get(toDelete-1);
+        foodList.remove(toDelete-1);
+        System.out.println(removed.getName() + " has been removed!");
     }
 
     //mainMenu; operations done from here
@@ -130,13 +145,13 @@ public class Main {
             choice = menu.displayMenu();
             switch (choice) {
                 case 1:
-                    ListFood();
+                    listFood();
                     break;
                 case 2:
-                    AddFood();
+                    addFood();
                     break;
                 case 3:
-                    System.out.println("case 3");
+                    removeFood();
                     break;
                 case 4:
                     System.out.println("case 4");
@@ -163,12 +178,15 @@ public class Main {
     //main
     public static void main(String[] args) {
 
-        //temp stuff
+        //temp stuff for testing
         FoodItem test = new FoodItem("Apple", "Tim Apple", 1.00, LocalDateTime.now());
         foodList.add(test);
 
         FoodItem test2 = new FoodItem("Pear", "Dis a pear", 19.94, LocalDateTime.now());
         foodList.add(test2);
+
+        FoodItem test3 = new FoodItem("Orange", "", 2.35, LocalDateTime.now());
+        foodList.add(test3);
 
         mainMenu();
     }
