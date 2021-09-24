@@ -47,6 +47,7 @@ public class FoodItem {
         return expDate;
     }
     public String getName() {return name;}
+    public boolean isExpired() {return isExpired;}
 
     //override toString()
     @Override

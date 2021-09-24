@@ -136,6 +136,44 @@ public class Main {
         System.out.println(removed.getName() + " has been removed!");
     }
 
+    public static void listExpired() {
+        if (foodList.isEmpty()) {
+            System.out.println("There are no food items!");
+        }
+        int itemNum = 1;
+        boolean noExpired = true;
+        for (FoodItem item : foodList) {
+            if (item.isExpired()) {
+                System.out.println("\nFood Item #" + itemNum);
+                System.out.println(item);
+                noExpired = false;
+                itemNum++;
+            }
+        }
+        if (noExpired && foodList.size() != 0) {
+            System.out.println("There are no expired items!");
+        }
+    }
+
+    public static void listNotExpired() {
+        if (foodList.isEmpty()) {
+            System.out.println("There are no food items!");
+        }
+        int itemNum = 1;
+        boolean allExpired = true;
+        for (FoodItem item : foodList) {
+            if (!item.isExpired()) {
+                System.out.println("\nFood Item #" + itemNum);
+                System.out.println(item);
+                allExpired = false;
+                itemNum++;
+            }
+        }
+        if (allExpired && foodList.size() != 0) {
+            System.out.println("All food items are expired!");
+        }
+    }
+
     //mainMenu; operations done from here
     public static void mainMenu() {
         TextMenu menu = new TextMenu();
@@ -154,10 +192,10 @@ public class Main {
                     removeFood();
                     break;
                 case 4:
-                    System.out.println("case 4");
+                    listExpired();
                     break;
                 case 5:
-                    System.out.println("case 5");
+                    listNotExpired();
                     break;
                 case 6:
                     System.out.println("case 6");
@@ -182,10 +220,14 @@ public class Main {
         FoodItem test = new FoodItem("Apple", "Tim Apple", 1.00, LocalDateTime.now());
         foodList.add(test);
 
-        FoodItem test2 = new FoodItem("Pear", "Dis a pear", 19.94, LocalDateTime.now());
+        LocalDateTime date2 = LocalDateTime.now();
+        date2 = date2.plusDays(3);
+        FoodItem test2 = new FoodItem("Pear", "Dis a pear", 19.94, date2);
         foodList.add(test2);
 
-        FoodItem test3 = new FoodItem("Orange", "", 2.35, LocalDateTime.now());
+        LocalDateTime date3 = LocalDateTime.now();
+        date3 = date3.plusDays(10);
+        FoodItem test3 = new FoodItem("Orange", "", 2.35, date3);
         foodList.add(test3);
 
         mainMenu();
