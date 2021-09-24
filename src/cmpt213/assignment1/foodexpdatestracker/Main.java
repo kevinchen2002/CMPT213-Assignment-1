@@ -43,10 +43,15 @@ public class Main {
 
     //case 1: list all food items
     public static void ListFood() {
-        for (FoodItem item : foodList) {
-            System.out.println(item);
+        if (foodList.isEmpty()) {
+            System.out.println("There are no food items!");
         }
-        //LATER: SORT BY EXPIRY
+        int itemNum = 1;
+        for (FoodItem item : foodList) {
+            System.out.println("\nFood Item #" + itemNum);
+            System.out.println(item);
+            itemNum++;
+        }
     }
 
     //case 2: add a food item
@@ -143,7 +148,6 @@ public class Main {
                     System.out.println("case 6");
                     break;
                 case 7:
-                    System.out.println("case 7");
                     break;
                 default:
                     System.out.println("Pick one of the above options");

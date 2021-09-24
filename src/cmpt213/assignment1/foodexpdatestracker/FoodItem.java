@@ -51,7 +51,7 @@ public class FoodItem {
     @Override
     public String toString() {
         String foodString = "";
-        foodString += "\nFood: " + name;
+        foodString += "Food: " + name;
         foodString += "\nNotes: " + notes;
         foodString += "\nPrice: " + price;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
