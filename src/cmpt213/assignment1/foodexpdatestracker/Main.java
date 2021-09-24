@@ -10,10 +10,15 @@ import static java.time.LocalTime.now;
 
 public class Main {
 
-    //ArrayList of food items
+    /**
+     * ArrayList of FoodItems
+     */
     static ArrayList<FoodItem> foodList = new ArrayList<>();
 
-    //helper functions to ensure numerical input
+    /**
+     * helper function that ensures numerical input
+     * @return a valid integer
+     */
     private static int getInt() {
         int choice;
         Scanner in = new Scanner(System.in);
@@ -26,6 +31,11 @@ public class Main {
             }
         }
     }
+
+    /**
+     * helper function that ensures numerical input
+     * @return a valid double
+     */
     private static double getDouble() {
         double choice;
         Scanner in = new Scanner(System.in);
@@ -39,9 +49,9 @@ public class Main {
         }
     }
 
-    //methods for menu options
-
-    //case 1: list all food items
+    /**
+     * menu option 1; lists all food items
+     */
     public static void listFood() {
         if (foodList.isEmpty()) {
             System.out.println("There are no food items!");
@@ -54,7 +64,10 @@ public class Main {
         }
     }
 
-    //case 2: add a food item
+    /**
+     * menu option 2; takes in fields and adds a food item
+     * looks at the list to ensure that it is inserted in order by expiration date
+     */
     public static void addFood() {
         Scanner in = new Scanner(System.in);
 
@@ -77,14 +90,16 @@ public class Main {
 
         //get expiry year
         int year = -1;
-        while (year < 2000) {
+        final int MIN_YEAR = 2000;
+        while (year < MIN_YEAR) {
             System.out.println("Enter the year of the expiry date: ");
             year = getInt();
         }
 
         //get expiry month
         int month = -1;
-        while (month < 1 || month > 12) {
+        final int MAX_MONTH = 12;
+        while (month < 1 || month > MAX_MONTH) {
             System.out.println("Enter the month of the expiry date: ");
             month = getInt();
         }
@@ -123,6 +138,9 @@ public class Main {
         System.out.println("Item " + foodName + " has been added!");
     }
 
+    /**
+     * menu option 3; removes a food
+     */
     public static void removeFood() {
         listFood();
         //get the item that the user will delete
@@ -136,6 +154,9 @@ public class Main {
         System.out.println(removed.getName() + " has been removed!");
     }
 
+    /**
+     * menu option 4; lists expired foods
+     */
     public static void listExpired() {
         if (foodList.isEmpty()) {
             System.out.println("There are no food items!");
@@ -155,6 +176,9 @@ public class Main {
         }
     }
 
+    /**
+     * menu option 5; lists non-expired foods
+     */
     public static void listNotExpired() {
         if (foodList.isEmpty()) {
             System.out.println("There are no food items!");
@@ -174,6 +198,9 @@ public class Main {
         }
     }
 
+    /**
+     * menu option 6; lists foods expiring within seven days
+     */
     public static void expiringSevenDays() {
         if (foodList.isEmpty()) {
             System.out.println("There are no food items!");
@@ -193,7 +220,9 @@ public class Main {
         }
     }
 
-    //mainMenu; operations done from here
+    /**
+     * calls the menu from TextMenu object and performs the corresponding operation
+     */
     public static void mainMenu() {
         TextMenu menu = new TextMenu();
         menu.printTitle();
@@ -232,7 +261,6 @@ public class Main {
     //load up json file if there is one
     //creates a menu and call show menu
 
-    //main
     public static void main(String[] args) {
 
         //temp stuff for testing
@@ -251,5 +279,4 @@ public class Main {
 
         mainMenu();
     }
-
 }

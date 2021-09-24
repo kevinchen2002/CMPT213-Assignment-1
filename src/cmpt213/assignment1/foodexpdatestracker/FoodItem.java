@@ -5,6 +5,11 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * FoodItem class
+ * Stores fields name, notes, price, expiration date, days until expiry, and expiration status
+ * FoodItem objects are stored in an ArrayList in Main
+ */
 public class FoodItem {
 
     //store attributes for name, notes, price, expiry date
@@ -17,6 +22,14 @@ public class FoodItem {
     private int daysUntilExp;
     private boolean isExpired;
 
+    /**
+     * FoodItem constructor; requires information about the object
+     *
+     * @param name the name of the food item; cannot be empty
+     * @param notes any other information; can be empty
+     * @param price the price of this item
+     * @param expDate the expiration date of this item
+     */
     public FoodItem(String name, String notes, double price, LocalDateTime expDate) {
 
         //name cannot be empty; enforce with exception
@@ -43,14 +56,36 @@ public class FoodItem {
         }
     }
 
+    /**
+     * getter for expiration date; used for date comparison
+     * @return the expiration date
+     */
     public LocalDateTime getExpDate() {
         return expDate;
     }
+
+    /**
+     * getter for the name of the item
+     * @return the name of the item
+     */
     public String getName() {return name;}
+
+    /**
+     * determines if a particular item is expired
+     * @return the expiration status
+     */
     public boolean isExpired() {return isExpired;}
+
+    /**
+     * getter for the days until expiration
+     * @return the number of days until expiration
+     */
     public int getDaysUntilExp() {return daysUntilExp;}
 
-    //override toString()
+    /**
+     * constructs a string with all information about this FoodItem
+     * @return the string containing all relevant information
+     */
     @Override
     public String toString() {
         String foodString = "";

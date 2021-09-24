@@ -6,10 +6,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * interface that the user interacts with
+ * called by Main when an option select is needed
+ */
 public class TextMenu {
 
-    //attributes for menu title and menu options
-    //  option seven saves to json file
+    /**
+     * stores the title of the menu; displayed once at the start
+     */
     private final String title = "\n  ______              _   ______            _              _____        _              _______             _             \n" +
             " |  ____|            | | |  ____|          (_)            |  __ \\      | |            |__   __|           | |            \n" +
             " | |__ ___   ___   __| | | |__  __  ___ __  _ _ __ _   _  | |  | | __ _| |_ ___  ___     | |_ __ __ _  ___| | _____ _ __ \n" +
@@ -19,20 +24,30 @@ public class TextMenu {
             "                                     | |            __/ |                                                                \n" +
             "                                     |_|           |___/                                                                 \n";
 
+    /**
+     * stores menu options
+     */
     private final String[] menuOptions = new String[] {"List food items", "Add new food item", "Remove food item",
             "List expired food items", "List non-expired food items", "List food items expiring within 7 days", "Exit"};
 
     private final int NUM_MENU_OPTIONS = 7;
 
-    //constructor
+    /**
+     * constructor which does nothing
+     */
     public TextMenu() {}
 
-    //DELETE LATER
+    /**
+     * prints the title; should only be called once upon startup
+     */
     public void printTitle() {
         System.out.println(title);
     }
 
-    //show menu method with a switch case and input handling
+    /**
+     * shows menu with current date and allows user to select an option
+     * @return the menu option that the user chose
+     */
     public int displayMenu() {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
