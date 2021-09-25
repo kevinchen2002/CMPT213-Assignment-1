@@ -2,7 +2,6 @@ package cmpt213.assignment1.foodexpdatestracker;
 
 
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
@@ -13,9 +12,6 @@ import java.time.temporal.ChronoUnit;
  */
 public class FoodItem {
 
-    //store attributes for name, notes, price, expiry date
-    //  name and notes may contain spaces
-    //  name cannot be empty, notes can
     private String name;
     private String notes;
     private double price;
@@ -43,7 +39,7 @@ public class FoodItem {
         this.price = price;
         this.expDate = expDate;
 
-        //update time until expiry upon construction
+        //update time until expiry upon construction; derived from https://mkyong.com/java8/java-8-difference-between-two-localdate-or-localdatetime/
         LocalDateTime currentTime = LocalDateTime.now();
         if (currentTime.isBefore(expDate)) {
             isExpired = false;
@@ -53,20 +49,6 @@ public class FoodItem {
             this.isExpired = true;
             this.daysUntilExp = -1;
         }
-    }
-
-    //BASIC CONSTRUCTOR
-    public FoodItem(String name, String notes, double price, LocalDateTime expDate, int daysUntilExp, boolean isExpired) {
-        this.name = name;
-        this.notes = notes;
-        this.price = price;
-        this.expDate = expDate;
-        this.daysUntilExp = daysUntilExp;
-        this.isExpired = isExpired;
-    }
-
-    public FoodItem() {
-
     }
 
     /**
@@ -108,7 +90,7 @@ public class FoodItem {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         foodString += "\nExpiry date: " + expDate.format(formatter);
 
-        //update time until expiry every time the food is displayed
+        //update time until expiry every time the food is displayed; derived from https://mkyong.com/java8/java-8-difference-between-two-localdate-or-localdatetime/
         LocalDateTime currentTime = LocalDateTime.now();
         if (currentTime.isBefore(expDate)) {
             isExpired = false;

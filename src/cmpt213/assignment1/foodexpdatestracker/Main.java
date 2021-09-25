@@ -73,6 +73,7 @@ public class Main {
     /**
      * menu option 2; takes in fields and adds a food item
      * looks at the list to ensure that it is inserted in order by expiration date
+     * this ensures that sorting will not be needed in the future
      */
     public static void addFood() {
         Scanner in = new Scanner(System.in);
@@ -86,7 +87,7 @@ public class Main {
             foodName = in.nextLine();
         }
 
-        String foodNotes = "";
+        String foodNotes;
         System.out.println("Enter any notes for the new food item: ");
         foodNotes = in.nextLine();
 
@@ -304,6 +305,7 @@ public class Main {
             foodList = myGson.fromJson(reader, new TypeToken<List<FoodItem>>() {}.getType());
             reader.close();
         } catch (NoSuchFileException e) {
+            //if the file is not there, create it
             createFile();
             foodList.clear();
         } catch (IOException e) {
