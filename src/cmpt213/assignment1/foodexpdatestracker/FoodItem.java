@@ -43,12 +43,11 @@ public class FoodItem {
         LocalDateTime currentTime = LocalDateTime.now();
         if (currentTime.isBefore(expDate)) {
             isExpired = false;
-            this.daysUntilExp = (int) ChronoUnit.DAYS.between(currentTime, expDate);
         }
         else {
             this.isExpired = true;
-            this.daysUntilExp = -1;
         }
+        this.daysUntilExp = (int) ChronoUnit.DAYS.between(currentTime, expDate);
     }
 
     /**
@@ -96,7 +95,7 @@ public class FoodItem {
             isExpired = false;
             int daysUntilExpiry = (int) ChronoUnit.DAYS.between(currentTime, expDate);
             this.daysUntilExp = daysUntilExpiry;
-            if (daysUntilExpiry == 0) {
+            if (daysUntilExpiry <= 1) {
                 foodString += "\nThis food item will expire today.";
             }
             else {
@@ -105,8 +104,10 @@ public class FoodItem {
         }
         else {
             this.isExpired = true;
-            this.daysUntilExp = -1;
-            foodString += "\nThis food is already expired!";
+            int daysUntilExpiry = (int) ChronoUnit.DAYS.between(currentTime, expDate);
+            this.daysUntilExp = daysUntilExpiry;
+            daysUntilExpiry = -daysUntilExpiry;
+            foodString += "\nThis food has been expired for " + daysUntilExpiry + " days!";
         }
 
         return foodString;
