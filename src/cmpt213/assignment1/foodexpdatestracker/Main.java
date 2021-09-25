@@ -4,7 +4,6 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import org.w3c.dom.Text;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -14,8 +13,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import static java.time.LocalTime.now;
 
 public class Main {
 
@@ -80,6 +77,9 @@ public class Main {
     public static void addFood() {
         Scanner in = new Scanner(System.in);
 
+        FoodItem dummy = new FoodItem("dummy", "dummy", 1, LocalDateTime.now());
+        foodList.add(dummy);
+
         String foodName = "";
         while (foodName.equals("")) {
             System.out.println("Enter the name of the new food item: ");
@@ -143,7 +143,7 @@ public class Main {
                 break;
             }
         }
-
+        foodList.remove(dummy);
         System.out.println("Item " + foodName + " has been added!");
     }
 
@@ -268,7 +268,9 @@ public class Main {
 
     }
 
-    //create json file if needed
+    /**
+     * Creates a new data.json file if needed; derived from https://www.w3schools.com/java/java_files_create.asp
+     */
     public static void createFile() {
         try {
             File foodStorage = new File("data.json");
@@ -281,7 +283,9 @@ public class Main {
         }
     }
 
-    //load up json file if there is one
+    /**
+     * loads data.json file if it exists; derived from https://attacomsian.com/blog/gson-read-json-file
+     */
     public static void loadFile() {
         Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
                 new TypeAdapter<LocalDateTime>() {
@@ -299,14 +303,17 @@ public class Main {
             Reader reader = Files.newBufferedReader(Paths.get("data.json"));
             foodList = myGson.fromJson(reader, new TypeToken<List<FoodItem>>() {}.getType());
             reader.close();
-
         } catch (NoSuchFileException e) {
             createFile();
+            foodList.clear();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * writes to data.json upon shutdown; derived from https://attacomsian.com/blog/gson-write-json-file
+     */
     public static void writeFile() {
         Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
                 new TypeAdapter<LocalDateTime>() {
@@ -332,10 +339,7 @@ public class Main {
         }
     }
 
-    //creates a menu and call show menu
-
     public static void main(String[] args) {
-
         loadFile();
         mainMenu();
     }
