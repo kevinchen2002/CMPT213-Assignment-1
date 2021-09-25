@@ -22,6 +22,8 @@ public class TextMenu {
             "                                     | |            __/ |                                                                \n" +
             "                                     |_|           |___/                                                                 \n";
 
+    private final String titleText = "Food Expiry Dates Tracker";
+
     /**
      * stores menu options
      */
@@ -43,13 +45,28 @@ public class TextMenu {
     }
 
     /**
+     * prints the smaller title with the hashtags; called every time the menu is shown
+     */
+    public void printSubTitle() {
+        int numHashtags = titleText.length() + 4;
+        String hashtags = "#";
+        hashtags = hashtags.repeat(numHashtags);
+        String fullTitle = "\n";
+        fullTitle += hashtags;
+        fullTitle += "\n# " + titleText + " #\n";
+        fullTitle += hashtags;
+        System.out.println(fullTitle);
+    }
+
+    /**
      * shows menu with current date and allows user to select an option
      * @return the menu option that the user chose
      */
     public int displayMenu() {
+        printSubTitle();
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        System.out.println("\nToday is: " + currentTime.format(formatter) + "\n");
+        System.out.println("Today is: " + currentTime.format(formatter) + "\n");
 
         for (int i = 1; i <= NUM_MENU_OPTIONS; i++) {
             System.out.println(i + ": " + menuOptions[i-1]);
