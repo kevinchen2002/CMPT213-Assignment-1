@@ -4,6 +4,7 @@ package cmpt213.assignment1.foodexpdatestracker;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 /**
  * FoodItem class
@@ -43,12 +44,10 @@ public class FoodItem {
         this.expDate = expDate;
 
         //update time until expiry upon construction
-        //FIX LATER, DOES NOT ACCOUNT FOR TIME BETWEEN MONTHS AND YEARS
         LocalDateTime currentTime = LocalDateTime.now();
         if (currentTime.isBefore(expDate)) {
             isExpired = false;
-            Period period = Period.between(currentTime.toLocalDate(), expDate.toLocalDate());
-            this.daysUntilExp = period.getDays();
+            this.daysUntilExp = (int) ChronoUnit.DAYS.between(currentTime, expDate);
         }
         else {
             this.isExpired = true;
@@ -110,12 +109,10 @@ public class FoodItem {
         foodString += "\nExpiry date: " + expDate.format(formatter);
 
         //update time until expiry every time the food is displayed
-        //FIX LATER, DOES NOT ACCOUNT FOR TIME BETWEEN MONTHS AND YEARS
         LocalDateTime currentTime = LocalDateTime.now();
         if (currentTime.isBefore(expDate)) {
             isExpired = false;
-            Period period = Period.between(currentTime.toLocalDate(), expDate.toLocalDate());
-            int daysUntilExpiry = period.getDays();
+            int daysUntilExpiry = (int) ChronoUnit.DAYS.between(currentTime, expDate);
             this.daysUntilExp = daysUntilExpiry;
             if (daysUntilExpiry == 0) {
                 foodString += "\nThis food item will expire today.";
