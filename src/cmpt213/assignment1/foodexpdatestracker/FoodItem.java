@@ -56,6 +56,20 @@ public class FoodItem {
         }
     }
 
+    //BASIC CONSTRUCTOR
+    public FoodItem(String name, String notes, double price, LocalDateTime expDate, int daysUntilExp, boolean isExpired) {
+        this.name = name;
+        this.notes = notes;
+        this.price = price;
+        this.expDate = expDate;
+        this.daysUntilExp = daysUntilExp;
+        this.isExpired = isExpired;
+    }
+
+    public FoodItem() {
+
+    }
+
     /**
      * getter for expiration date; used for date comparison
      * @return the expiration date

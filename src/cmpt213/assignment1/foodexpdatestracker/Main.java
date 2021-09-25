@@ -1,9 +1,18 @@
 package cmpt213.assignment1.foodexpdatestracker;
 
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import org.w3c.dom.Text;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static java.time.LocalTime.now;
@@ -249,6 +258,7 @@ public class Main {
                     expiringSevenDays();
                     break;
                 case 7:
+                    writeFile();
                     break;
                 default:
                     System.out.println("Pick one of the above options");
@@ -258,25 +268,75 @@ public class Main {
 
     }
 
+    //create json file if needed
+    public static void createFile() {
+        try {
+            File foodStorage = new File("data.json");
+            if (foodStorage.createNewFile()) {
+                System.out.println("File data.json created!");
+            }
+        } catch (IOException e) {
+            System.out.println("Error while creating file");
+            e.printStackTrace();
+        }
+    }
+
     //load up json file if there is one
+    public static void loadFile() {
+        Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
+                new TypeAdapter<LocalDateTime>() {
+                    @Override
+                    public void write(JsonWriter jsonWriter,
+                                      LocalDateTime localDateTime) throws IOException {
+                        jsonWriter.value(localDateTime.toString());
+                    }
+                    @Override
+                    public LocalDateTime read(JsonReader jsonReader) throws IOException {
+                        return LocalDateTime.parse(jsonReader.nextString());
+                    }
+                }).create();
+        try {
+            Reader reader = Files.newBufferedReader(Paths.get("data.json"));
+            foodList = myGson.fromJson(reader, new TypeToken<List<FoodItem>>() {}.getType());
+            reader.close();
+
+        } catch (NoSuchFileException e) {
+            createFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeFile() {
+        Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
+                new TypeAdapter<LocalDateTime>() {
+                    @Override
+                    public void write(JsonWriter jsonWriter,
+                                      LocalDateTime localDateTime) throws IOException {
+                        jsonWriter.value(localDateTime.toString());
+                    }
+                    @Override
+                    public LocalDateTime read(JsonReader jsonReader) throws IOException {
+                        return LocalDateTime.parse(jsonReader.nextString());
+                    }
+                }).create();
+        try {
+            Writer writer = Files.newBufferedWriter(Paths.get("data.json"));
+            myGson.toJson(foodList, writer);
+            writer.close();
+
+        } catch (NoSuchFileException e) {
+            System.out.println("File not found!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //creates a menu and call show menu
 
     public static void main(String[] args) {
 
-        //temp stuff for testing
-        FoodItem test = new FoodItem("Apple", "Tim Apple", 1.00, LocalDateTime.now());
-        foodList.add(test);
-
-        LocalDateTime date2 = LocalDateTime.now();
-        date2 = date2.plusDays(3);
-        FoodItem test2 = new FoodItem("Pear", "Dis a pear", 19.94, date2);
-        foodList.add(test2);
-
-        LocalDateTime date3 = LocalDateTime.now();
-        date3 = date3.plusDays(10);
-        FoodItem test3 = new FoodItem("Orange", "", 2.35, date3);
-        foodList.add(test3);
-
+        loadFile();
         mainMenu();
     }
 }
