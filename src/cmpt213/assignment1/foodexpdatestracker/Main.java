@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Main class
+ */
 public class Main {
 
     /**
@@ -341,6 +344,10 @@ public class Main {
         }
     }
 
+    /**
+     * main method
+     * @param args command line argument
+     */
     public static void main(String[] args) {
         loadFile();
         mainMenu();
