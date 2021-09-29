@@ -132,7 +132,7 @@ public class Main {
             day = getInt();
         }
 
-        LocalDateTime expiry = LocalDateTime.of(year, month, day, 11, 59);
+        LocalDateTime expiry = LocalDateTime.of(year, month, day, 23, 59);
         FoodItem newFoodItem = new FoodItem(foodName, foodNotes, price, expiry);
 
         //insert in the correct spot to ensure ascending order of dates

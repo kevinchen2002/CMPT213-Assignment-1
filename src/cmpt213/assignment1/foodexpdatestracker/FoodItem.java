@@ -95,7 +95,7 @@ public class FoodItem {
             isExpired = false;
             int daysUntilExpiry = (int) ChronoUnit.DAYS.between(currentTime, expDate);
             this.daysUntilExp = daysUntilExpiry;
-            if (daysUntilExpiry <= 1) {
+            if (daysUntilExpiry <= 0) {
                 foodString += "\nThis food item will expire today.";
             }
             else {
