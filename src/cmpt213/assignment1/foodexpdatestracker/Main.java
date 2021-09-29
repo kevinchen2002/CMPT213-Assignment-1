@@ -24,6 +24,8 @@ public class Main {
      */
     static ArrayList<FoodItem> foodList = new ArrayList<>();
 
+    static String fileName = "data.json";
+
     /**
      * helper function that ensures numerical input
      * @return a valid integer
@@ -277,7 +279,7 @@ public class Main {
      */
     public static void createFile() {
         try {
-            File foodStorage = new File("data.json");
+            File foodStorage = new File(fileName);
             if (foodStorage.createNewFile()) {
                 System.out.println("File data.json created!");
             }
@@ -304,7 +306,7 @@ public class Main {
                     }
                 }).create();
         try {
-            Reader reader = Files.newBufferedReader(Paths.get("data.json"));
+            Reader reader = Files.newBufferedReader(Paths.get(fileName));
             foodList = myGson.fromJson(reader, new TypeToken<List<FoodItem>>() {}.getType());
             reader.close();
         } catch (NoSuchFileException e) {
@@ -333,7 +335,7 @@ public class Main {
                     }
                 }).create();
         try {
-            Writer writer = Files.newBufferedWriter(Paths.get("data.json"));
+            Writer writer = Files.newBufferedWriter(Paths.get(fileName));
             myGson.toJson(foodList, writer);
             writer.close();
 
