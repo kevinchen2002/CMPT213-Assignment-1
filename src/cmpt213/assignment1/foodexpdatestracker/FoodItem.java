@@ -12,10 +12,10 @@ import java.time.temporal.ChronoUnit;
  */
 public class FoodItem {
 
-    private String name;
-    private String notes;
-    private double price;
-    private LocalDateTime expDate;
+    private final String name;
+    private final String notes;
+    private final double price;
+    private final LocalDateTime expDate;
     private int daysUntilExp;
     private boolean isExpired;
 
@@ -41,12 +41,7 @@ public class FoodItem {
 
         //update time until expiry upon construction; derived from https://mkyong.com/java8/java-8-difference-between-two-localdate-or-localdatetime/
         LocalDateTime currentTime = LocalDateTime.now();
-        if (currentTime.isBefore(expDate)) {
-            isExpired = false;
-        }
-        else {
-            this.isExpired = true;
-        }
+        isExpired = !currentTime.isBefore(expDate);
         this.daysUntilExp = (int) ChronoUnit.DAYS.between(currentTime, expDate);
     }
 

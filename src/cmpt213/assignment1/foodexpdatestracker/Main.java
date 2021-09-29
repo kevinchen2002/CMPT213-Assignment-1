@@ -245,30 +245,14 @@ public class Main {
         while (choice != 7) {
             choice = menu.displayMenu();
             switch (choice) {
-                case 1:
-                    listFood();
-                    break;
-                case 2:
-                    addFood();
-                    break;
-                case 3:
-                    removeFood();
-                    break;
-                case 4:
-                    listExpired();
-                    break;
-                case 5:
-                    listNotExpired();
-                    break;
-                case 6:
-                    expiringSevenDays();
-                    break;
-                case 7:
-                    writeFile();
-                    break;
-                default:
-                    System.out.println("Pick one of the above options");
-                    break;
+                case 1 -> listFood();
+                case 2 -> addFood();
+                case 3 -> removeFood();
+                case 4 -> listExpired();
+                case 5 -> listNotExpired();
+                case 6 -> expiringSevenDays();
+                case 7 -> writeFile();
+                default -> System.out.println("Pick one of the above options");
             }
         }
 
