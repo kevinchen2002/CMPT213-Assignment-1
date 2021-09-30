@@ -30,7 +30,7 @@ public class Main {
      * helper function that ensures numerical input
      * @return a valid integer
      */
-    private static int getInt() {
+    static int getInt() {
         int choice;
         Scanner in = new Scanner(System.in);
         while (true) {
@@ -47,7 +47,7 @@ public class Main {
      * helper function that ensures numerical input
      * @return a valid double
      */
-    private static double getDouble() {
+    static double getDouble() {
         double choice;
         Scanner in = new Scanner(System.in);
         while (true) {
@@ -63,7 +63,7 @@ public class Main {
     /**
      * menu option 1; lists all food items
      */
-    public static void listFood() {
+    static void listFood() {
         if (foodList.isEmpty()) {
             System.out.println("There are no food items!");
         }
@@ -80,7 +80,7 @@ public class Main {
      * looks at the list to ensure that it is inserted in order by expiration date
      * this ensures that sorting will not be needed in the future
      */
-    public static void addFood() {
+    static void addFood() {
         Scanner in = new Scanner(System.in);
 
         FoodItem dummy = new FoodItem("dummy", "dummy", 1, LocalDateTime.now());
@@ -156,13 +156,16 @@ public class Main {
     /**
      * menu option 3; removes a food
      */
-    public static void removeFood() {
+    static void removeFood() {
         listFood();
         //get the item that the user will delete
         int toDelete = -1;
         while (toDelete < 1 || toDelete > foodList.size()) {
-            System.out.println("Which item would you like to delete? ");
+            System.out.println("Which item would you like to delete? 0 to cancel.");
             toDelete = getInt();
+            if (toDelete == 0) {
+                return;
+            }
         }
         FoodItem removed = foodList.get(toDelete-1);
         foodList.remove(toDelete-1);
@@ -172,7 +175,7 @@ public class Main {
     /**
      * menu option 4; lists expired foods
      */
-    public static void listExpired() {
+    static void listExpired() {
         if (foodList.isEmpty()) {
             System.out.println("There are no food items!");
         }
@@ -194,7 +197,7 @@ public class Main {
     /**
      * menu option 5; lists non-expired foods
      */
-    public static void listNotExpired() {
+    static void listNotExpired() {
         if (foodList.isEmpty()) {
             System.out.println("There are no food items!");
         }
@@ -216,7 +219,7 @@ public class Main {
     /**
      * menu option 6; lists foods expiring within seven days
      */
-    public static void expiringSevenDays() {
+    static void expiringSevenDays() {
         if (foodList.isEmpty()) {
             System.out.println("There are no food items!");
         }
@@ -238,7 +241,7 @@ public class Main {
     /**
      * calls the menu from TextMenu object and performs the corresponding operation
      */
-    public static void mainMenu() {
+    static void mainMenu() {
         TextMenu menu = new TextMenu();
         menu.printTitle();
         int choice = 0;
@@ -261,7 +264,7 @@ public class Main {
     /**
      * Creates a new data.json file if needed; derived from https://www.w3schools.com/java/java_files_create.asp
      */
-    public static void createFile() {
+    static void createFile() {
         try {
             File foodStorage = new File(fileName);
             if (foodStorage.createNewFile()) {
@@ -276,7 +279,7 @@ public class Main {
     /**
      * loads data.json file if it exists; derived from https://attacomsian.com/blog/gson-read-json-file
      */
-    public static void loadFile() {
+    static void loadFile() {
         Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
                 new TypeAdapter<LocalDateTime>() {
                     @Override
@@ -305,7 +308,7 @@ public class Main {
     /**
      * writes to data.json upon shutdown; derived from https://attacomsian.com/blog/gson-write-json-file
      */
-    public static void writeFile() {
+    static void writeFile() {
         Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
                 new TypeAdapter<LocalDateTime>() {
                     @Override
